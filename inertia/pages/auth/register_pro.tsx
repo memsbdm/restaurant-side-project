@@ -2,7 +2,7 @@ import { FormEvent } from 'react'
 import { useForm } from '@inertiajs/react'
 
 export default function RegisterPro() {
-  const { post, processing, data, setData, reset } = useForm({
+  const { errors, post, processing, data, setData, reset } = useForm({
     firstName: '',
     lastName: '',
     username: '',
@@ -38,6 +38,7 @@ export default function RegisterPro() {
             value={data.firstName}
             onChange={(e) => setData('firstName', e.target.value)}
           />
+          {errors.firstName && <small>{errors.firstName}</small>}
         </div>
 
         <div>
@@ -49,6 +50,7 @@ export default function RegisterPro() {
             value={data.lastName}
             onChange={(e) => setData('lastName', e.target.value)}
           />
+          {errors.lastName && <small>{errors.lastName}</small>}
         </div>
 
         <div>
@@ -60,6 +62,7 @@ export default function RegisterPro() {
             value={data.username}
             onChange={(e) => setData('username', e.target.value)}
           />
+          {errors.username && <small>{errors.username}</small>}
         </div>
 
         <div>
@@ -71,6 +74,7 @@ export default function RegisterPro() {
             value={data.email}
             onChange={(e) => setData('email', e.target.value)}
           />
+          {errors.email && <small>{errors.email}</small>}
         </div>
 
         <div>
@@ -82,6 +86,7 @@ export default function RegisterPro() {
             value={data.phone}
             onChange={(e) => setData('phone', e.target.value)}
           />
+          {errors.phone && <small>{errors.phone}</small>}
         </div>
 
         <div>
@@ -93,6 +98,7 @@ export default function RegisterPro() {
             value={data.password}
             onChange={(e) => setData('password', e.target.value)}
           />
+          {errors.password && <small>{errors.password}</small>}
         </div>
 
         <div>
