@@ -14,8 +14,8 @@ export default class extends BaseSchema {
       table.string('first_name').nullable()
       table.string('last_name').nullable()
       table.string('phone').nullable()
-      table.integer('role_id').unsigned().notNullable().references('id').inTable('roles')
       table.string('password').notNullable()
+      table.integer('role_id').unsigned().notNullable().references('id').inTable('roles')
     })
   }
 

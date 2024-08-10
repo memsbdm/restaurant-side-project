@@ -43,12 +43,12 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare phone: string | null
 
+  @column({ serializeAs: null })
+  declare password: string
+
   @column()
   declare roleId: UserRoleId
 
   @belongsTo(() => Role)
   declare role: BelongsTo<typeof Role>
-
-  @column({ serializeAs: null })
-  declare password: string
 }

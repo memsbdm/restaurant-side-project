@@ -1,4 +1,5 @@
-import { Head } from '@inertiajs/react'
+import { Head, Link } from '@inertiajs/react'
+import { tuyau } from '~/core/providers/tuyau'
 
 export default function Home(props: { version: number }) {
   return (
@@ -12,6 +13,7 @@ export default function Home(props: { version: number }) {
           Learn more about AdonisJS and Inertia.js by visiting the{' '}
           <a href="https://docs.adonisjs.com/guides/inertia">AdonisJS documentation</a>.
         </span>
+        <Link href={tuyau.$url('protected')}>Protected</Link>
       </div>
     </>
   )

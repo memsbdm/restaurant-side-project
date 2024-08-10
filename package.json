@@ -16,6 +16,7 @@
   "imports": {
     "#auth/*": "./app/auth/*.js",
     "#core/*": "./app/core/*.js",
+    "#inertia/*": "./inertia/*.js",
     "#users/*": "./app/users/*.js",
     "#providers/*": "./providers/*.js",
     "#database/*": "./database/*.js",
