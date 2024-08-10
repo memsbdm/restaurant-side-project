@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+const LoginController = () => import('#auth/controllers/login_controller')
 const LogoutController = () => import('#auth/controllers/logout_controller')
 const RegisterProController = () => import('#auth/controllers/register_pro_controller')
 
@@ -18,8 +19,10 @@ router.on('/protected').renderInertia('protected').middleware(middleware.auth())
 // Authentication
 router
   .group(() => {
-    router.get('/auth/register/pro', [RegisterProController, 'render'])
-    router.post('/auth/register/pro', [RegisterProController, 'execute']).as('auth.register.pro')
+    router.get('/auth/login', [LoginController, 'render']).as('auth.login')
+    router.post('/auth/login', [LoginController, 'execute'])
+    router.get('/auth/register/pro', [RegisterProController, 'render']).as('auth.register.pro')
+    router.post('/auth/register/pro', [RegisterProController, 'execute'])
   })
   .middleware(middleware.guest())
 

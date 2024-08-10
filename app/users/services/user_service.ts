@@ -10,4 +10,8 @@ export class UserService {
   async register(user: StoreProDto): Promise<User> {
     return this.repository.store(user)
   }
+
+  attempt(login: string, password: string): Promise<User> {
+    return this.repository.attempt(login, password)
+  }
 }
