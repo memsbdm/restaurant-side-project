@@ -9,11 +9,13 @@ import { tuyau } from '#inertia/core/providers/tuyau'
 export default class RegisterProController {
   static StoreProValidator = vine.compile(
     vine.object({
-      firstName: vine.string().trim().toLowerCase(),
-      lastName: vine.string().trim().toLowerCase(),
+      firstName: vine.string().trim().minLength(1).maxLength(50).toLowerCase(),
+      lastName: vine.string().trim().minLength(1).maxLength(50).toLowerCase(),
       username: vine
         .string()
         .trim()
+        .minLength(4)
+        .maxLength(14)
         .toLowerCase()
         .unique(async (db, value) => {
           const user = await db.from('users').where('username', value).first()

@@ -34,6 +34,7 @@ export default function LoginPage() {
             id="login"
             name="login"
             type="text"
+            required={true}
             value={data.login}
             onChange={(e) => setData('login', e.target.value)}
           />
@@ -46,6 +47,7 @@ export default function LoginPage() {
             id="password"
             name="password"
             type="password"
+            required={true}
             value={data.password}
             onChange={(e) => setData('password', e.target.value)}
           />

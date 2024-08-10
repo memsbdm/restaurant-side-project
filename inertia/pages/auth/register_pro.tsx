@@ -35,6 +35,7 @@ export default function RegisterPro() {
             id="firstName"
             name="firstName"
             type="text"
+            required={true}
             value={data.firstName}
             onChange={(e) => setData('firstName', e.target.value)}
           />
@@ -47,6 +48,7 @@ export default function RegisterPro() {
             id="lastName"
             name="lastName"
             type="text"
+            required={true}
             value={data.lastName}
             onChange={(e) => setData('lastName', e.target.value)}
           />
@@ -59,6 +61,7 @@ export default function RegisterPro() {
             id="username"
             name="username"
             type="text"
+            required={true}
             value={data.username}
             onChange={(e) => setData('username', e.target.value)}
           />
@@ -71,6 +74,7 @@ export default function RegisterPro() {
             id="email"
             name="email"
             type="email"
+            required={true}
             value={data.email}
             onChange={(e) => setData('email', e.target.value)}
           />
@@ -83,6 +87,7 @@ export default function RegisterPro() {
             id="phone"
             name="phone"
             type="tel"
+            required={true}
             value={data.phone}
             onChange={(e) => setData('phone', e.target.value)}
           />
@@ -95,6 +100,7 @@ export default function RegisterPro() {
             id="password"
             name="password"
             type="password"
+            required={true}
             value={data.password}
             onChange={(e) => setData('password', e.target.value)}
           />
@@ -107,6 +113,7 @@ export default function RegisterPro() {
             id="passwordConfirmation"
             name="passwordConfirmation"
             type="password"
+            required={true}
             value={data.passwordConfirmation}
             onChange={(e) => setData('passwordConfirmation', e.target.value)}
           />
