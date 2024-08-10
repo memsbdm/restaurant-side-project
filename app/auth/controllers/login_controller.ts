@@ -9,6 +9,7 @@ export default class LoginController {
     vine.object({
       login: vine.string().trim().toLowerCase(),
       password: vine.string(),
+      isRememberMe: vine.boolean(),
     })
   )
   constructor(private authService: AuthService) {}
@@ -18,10 +19,11 @@ export default class LoginController {
   }
 
   async execute({ request, auth, response }: HttpContext) {
-    const { login, password } = await request.validateUsing(LoginController.LoginValidator)
-
+    const { login, password, isRememberMe } = await request.validateUsing(
+      LoginController.LoginValidator
+    )
     const user = await this.authService.attempt(login, password)
-    await auth.use('web').login(user)
+    await auth.use('web').login(user, !!isRememberMe)
 
     return response.redirect().toPath('/')
   }

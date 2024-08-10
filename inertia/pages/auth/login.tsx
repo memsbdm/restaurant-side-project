@@ -3,7 +3,11 @@ import type { FormEvent } from 'react'
 import { tuyau } from '~/core/providers/tuyau'
 
 export default function LoginPage() {
-  const { errors, post, processing, data, setData, reset } = useForm({ login: '', password: '' })
+  const { errors, post, processing, data, setData, reset } = useForm({
+    login: '',
+    password: '',
+    isRememberMe: false,
+  })
 
   function submit(event: FormEvent) {
     event.preventDefault()
@@ -52,6 +56,15 @@ export default function LoginPage() {
             onChange={(e) => setData('password', e.target.value)}
           />
           {errors.password && <small>{errors.password}</small>}
+        </div>
+        <div>
+          <label htmlFor="isRememberMe">Remember me</label>
+          <input
+            type="checkbox"
+            id="isRememberMe"
+            name="isRememberMe"
+            onChange={(e) => setData('isRememberMe', e.target.checked)}
+          />
         </div>
         <button type="submit" disabled={processing}>
           Login
