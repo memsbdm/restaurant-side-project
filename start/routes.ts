@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+const VerifyEmailController = () => import('#users/controllers/verify_email_controller')
 const LoginController = () => import('#auth/controllers/login_controller')
 const LogoutController = () => import('#auth/controllers/logout_controller')
 const RegisterProController = () => import('#auth/controllers/register_pro_controller')
@@ -27,6 +28,14 @@ router
   .middleware(middleware.guest())
 
 router
-  .delete('auth/logout', [LogoutController, 'execute'])
+  .delete('/auth/logout', [LogoutController, 'execute'])
   .middleware(middleware.auth())
   .as('auth.logout')
+
+// Email verification
+router
+  .group(() => {
+    router.get('/verify-email', [VerifyEmailController, 'render']).as('verify.email')
+    router.get('/verify-email/:token', [VerifyEmailController, 'execute']).as('verify.email.verify')
+  })
+  .middleware(middleware.auth())

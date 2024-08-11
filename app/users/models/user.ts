@@ -1,13 +1,15 @@
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbRememberMeTokensProvider } from '@adonisjs/auth/session'
 import { Opaque } from '@adonisjs/core/types/helpers'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import Role from '#users/models/role'
 import type { UserRoleId } from '#users/enums/user_role'
 import { DateTime } from 'luxon'
+import Token from '#tokens/models/token'
+import { TokenType } from '#tokens/enums/token_type'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email', 'username'],
@@ -50,8 +52,18 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @column()
+  declare isEmailVerified: boolean
+
+  @column()
   declare roleId: UserRoleId
 
   @belongsTo(() => Role)
   declare role: BelongsTo<typeof Role>
+
+  @hasMany(() => Token, {
+    onQuery: (query) => {
+      query.where('typeId', TokenType.VerifyEmail)
+    },
+  })
+  declare verifyEmailTokens: HasMany<typeof Token>
 }

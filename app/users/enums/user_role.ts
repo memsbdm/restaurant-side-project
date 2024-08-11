@@ -8,4 +8,15 @@ export type UserRoleId = (typeof UserRole)[keyof typeof UserRole]
 export const UserRoleText = {
   [UserRole.Admin]: 'Admin',
   [UserRole.Pro]: 'Pro',
-}
+} as const
+
+export const rolesDbValues = [
+  {
+    id: UserRole.Admin,
+    name: UserRoleText[UserRole.Admin],
+  },
+  {
+    id: UserRole.Pro,
+    name: UserRoleText[UserRole.Pro],
+  },
+]

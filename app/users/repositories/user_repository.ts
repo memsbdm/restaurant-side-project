@@ -9,4 +9,9 @@ export class UserRepository {
   attempt(uid: string, password: string): Promise<User> {
     return User.verifyCredentials(uid, password)
   }
+
+  async verifyEmail(user: User): Promise<void> {
+    user.isEmailVerified = true
+    await user.save()
+  }
 }

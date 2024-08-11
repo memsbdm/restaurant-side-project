@@ -1,8 +1,8 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
-import { rolesDbValues } from '#users/enums/user_role'
+import { tokenTypesDbValues } from '#tokens/enums/token_type'
 
 export default class extends BaseSchema {
-  protected tableName = 'roles'
+  protected tableName = 'token_types'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
@@ -11,7 +11,7 @@ export default class extends BaseSchema {
     })
 
     this.defer(async (db) => {
-      await db.table(this.tableName).multiInsert(rolesDbValues)
+      await db.table(this.tableName).multiInsert(tokenTypesDbValues)
     })
   }
 

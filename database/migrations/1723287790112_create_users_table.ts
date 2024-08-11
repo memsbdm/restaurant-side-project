@@ -15,6 +15,7 @@ export default class extends BaseSchema {
       table.string('last_name').nullable()
       table.string('phone').nullable()
       table.string('password').notNullable()
+      table.boolean('is_email_verified').notNullable().defaultTo(false)
       table.integer('role_id').unsigned().notNullable().references('id').inTable('roles')
     })
   }

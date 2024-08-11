@@ -1,4 +1,4 @@
-import { useForm } from '@inertiajs/react'
+import { Link, useForm } from '@inertiajs/react'
 import type { FormEvent } from 'react'
 import { tuyau } from '~/core/providers/tuyau'
 
@@ -70,6 +70,7 @@ export default function LoginPage() {
           Login
         </button>
       </form>
+      <Link href={tuyau.$url('auth.register.pro')}>Or create a new pro account</Link>
     </>
   )
 }

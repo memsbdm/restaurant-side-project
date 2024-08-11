@@ -13,6 +13,7 @@ export default class extends BaseSeeder {
         lastName: 'badem',
         phone: '0600000000',
         password: 'secret123',
+        isEmailVerified: true,
         roleId: UserRole.Admin,
       },
       {
@@ -23,6 +24,7 @@ export default class extends BaseSeeder {
         lastName: 'doe',
         phone: '0700000000',
         password: 'secret123',
+        isEmailVerified: true,
         roleId: UserRole.Pro,
       },
     ])

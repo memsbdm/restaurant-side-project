@@ -53,6 +53,6 @@ export default class RegisterProController {
     })
     await auth.use('web').login(user)
 
-    return response.redirect().toPath(tuyau.$url('protected'))
+    return response.redirect().toPath(tuyau.$url('verify.email'))
   }
 }
