@@ -25,4 +25,9 @@ export class TokenService {
 
     return record.token
   }
+
+  async verifyTokenOfType(tokenType: TokenTypeId, token: string): Promise<boolean> {
+    const record = await this.repository.verifyTokenOfType(tokenType, token)
+    return !!record
+  }
 }

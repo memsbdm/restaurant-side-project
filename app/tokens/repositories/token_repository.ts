@@ -27,4 +27,12 @@ export class TokenRepository {
       token,
     })
   }
+
+  verifyTokenOfType(tokenType: TokenTypeId, token: string): Promise<Token | null> {
+    return Token.query()
+      .where('expiresAt', '>', DateTime.now().toSQL())
+      .where('token', token)
+      .where('type_id', tokenType)
+      .first()
+  }
 }

@@ -22,7 +22,15 @@ export class UserService {
     return this.repository.attempt(login, password)
   }
 
+  findByEmail(email: string): Promise<User | null> {
+    return this.repository.findByEmail(email)
+  }
+
   verifyEmail(user: User): Promise<void> {
     return this.repository.verifyEmail(user)
+  }
+
+  changePassword(user: User, password: string): Promise<void> {
+    return this.repository.changePassword(user, password)
   }
 }

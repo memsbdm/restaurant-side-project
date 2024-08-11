@@ -70,6 +70,9 @@ export default function LoginPage() {
           Login
         </button>
       </form>
+      <p>
+        Forgot your password? <Link href={tuyau.$url('forgot.password')}>Click here</Link>
+      </p>
       <Link href={tuyau.$url('auth.register.pro')}>Or create a new pro account</Link>
     </>
   )

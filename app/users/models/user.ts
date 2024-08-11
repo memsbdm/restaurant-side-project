@@ -66,4 +66,11 @@ export default class User extends compose(BaseModel, AuthFinder) {
     },
   })
   declare verifyEmailTokens: HasMany<typeof Token>
+
+  @hasMany(() => Token, {
+    onQuery: (query) => {
+      query.where('typeId', TokenType.ResetPassword)
+    },
+  })
+  declare resetPasswordTokens: HasMany<typeof Token>
 }

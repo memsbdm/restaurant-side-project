@@ -14,4 +14,12 @@ export class UserRepository {
     user.isEmailVerified = true
     await user.save()
   }
+
+  findByEmail(email: string): Promise<User | null> {
+    return User.findBy('email', email)
+  }
+
+  changePassword(user: User, password: string): Promise<void> {
+    return user.merge({ password }).save()
+  }
 }
