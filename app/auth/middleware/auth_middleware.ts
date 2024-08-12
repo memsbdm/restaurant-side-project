@@ -1,26 +1,26 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
-import type { Authenticators } from '@adonisjs/auth/types'
 import { tuyau } from '#inertia/core/providers/tuyau'
 
 /**
  * Auth middleware is used authenticate HTTP requests and deny
  * access to unauthenticated users.
  */
-export default class AuthMiddleware {
-  /**
-   * The URL to redirect to, when authentication fails
-   */
-  redirectTo = tuyau.$url('auth.login')
 
-  async handle(
-    ctx: HttpContext,
-    next: NextFn,
-    options: {
-      guards?: (keyof Authenticators)[]
-    } = {}
-  ) {
-    await ctx.auth.authenticateUsing(options.guards, { loginRoute: this.redirectTo })
-    return next()
+export default class AuthMiddleware {
+  async handle({ auth, response }: HttpContext, next: NextFn) {
+    /**
+     * Middleware logic goes here (before the next call)
+     */
+    const user = auth?.user
+    if (!user) {
+      return response.redirect().toPath(tuyau.$url('auth.login'))
+    }
+
+    /**
+     * Call next method in the pipeline and return its output
+     */
+    const output = await next()
+    return output
   }
 }
