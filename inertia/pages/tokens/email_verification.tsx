@@ -3,7 +3,7 @@ import { FormEvent, useState } from 'react'
 import { useForm } from '@inertiajs/react'
 
 export default function EmailVerification() {
-  const { post, processing } = useForm()
+  const { errors, post, processing } = useForm()
   const [isEmailSent, setIsEmailSent] = useState(false)
 
   function submit(event: FormEvent) {
@@ -36,6 +36,11 @@ export default function EmailVerification() {
           Resend
         </button>
       </form>
+      {'code' in errors && errors.code === 'E_TOO_MANY_REQUESTS' && 'timer' in errors && (
+        <span>
+          Pleast wait before sending another email ({errors.timer as number} seconds remaining).
+        </span>
+      )}
       {isEmailSent && <span>We've resent the email.</span>}
     </div>
   )

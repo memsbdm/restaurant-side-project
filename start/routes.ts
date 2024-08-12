@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+import { forgotPasswordLimiter, verifyEmailLimiter } from './limiter.js'
 const ResetPasswordController = () => import('#users/controllers/reset_password_controller')
 const ForgotPasswordController = () => import('#users/controllers/forgot_password_controller')
 const VerifyEmailController = () => import('#users/controllers/verify_email_controller')
@@ -39,7 +40,10 @@ router
   .group(() => {
     router.get('/verify-email', [VerifyEmailController, 'render']).as('verify.email')
     router.get('/verify-email/:token', [VerifyEmailController, 'execute']).as('verify.email.verify')
-    router.post('verify-email/resend', [VerifyEmailController, 'resend']).as('verify.email.resend')
+    router
+      .post('verify-email/resend', [VerifyEmailController, 'resend'])
+      .use(verifyEmailLimiter)
+      .as('verify.email.resend')
   })
   .middleware(middleware.auth())
 
@@ -49,6 +53,7 @@ router
     router.get('/forgot-password', [ForgotPasswordController, 'render']).as('forgot.password')
     router
       .post('/forgot-password/send', [ForgotPasswordController, 'execute'])
+      .use(forgotPasswordLimiter)
       .as('forgot.password.send')
     router
       .get('/reset-password/reset/:token', [ResetPasswordController, 'render'])

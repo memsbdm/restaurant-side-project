@@ -29,6 +29,11 @@ export default function ForgotPassword() {
   return (
     <>
       <h1>Forgot your password</h1>
+      {'code' in errors && errors.code === 'E_TOO_MANY_REQUESTS' && 'timer' in errors && (
+        <span>
+          Pleast wait before sending another email ({errors.timer as number} seconds remaining).
+        </span>
+      )}
       {isEmailSent && (
         <div>An email has been sent to you with instructions on how to reset your password.</div>
       )}

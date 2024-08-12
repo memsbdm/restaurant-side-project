@@ -2,6 +2,7 @@ import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 import type { StatusPageRange, StatusPageRenderer } from '@adonisjs/core/types/http'
 import { errors as authErrors } from '@adonisjs/auth'
+import { errors as limiterErrors } from '@adonisjs/limiter'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -33,6 +34,13 @@ export default class HttpExceptionHandler extends ExceptionHandler {
   async handle(error: unknown, ctx: HttpContext) {
     if (error instanceof authErrors.E_INVALID_CREDENTIALS) {
       ctx.session.flash('errors', { code: 'E_INVALID_CREDENTIALS' })
+      return ctx.response.redirect().back()
+    }
+
+    if (error instanceof limiterErrors.E_TOO_MANY_REQUESTS) {
+      const headers = error.getDefaultHeaders()
+      const timer = headers['Retry-After']
+      ctx.session.flash('errors', { code: 'E_TOO_MANY_REQUESTS', timer })
       return ctx.response.redirect().back()
     }
 
