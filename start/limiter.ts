@@ -18,3 +18,7 @@ export const verifyEmailLimiter = limiter.define('email_verification', () => {
 export const forgotPasswordLimiter = limiter.define('forgot_password', () => {
   return limiter.allowRequests(1).every('1 minute')
 })
+
+export const verifyTokenLimiter = limiter.define('verify_token', () => {
+  return limiter.allowRequests(20).every('1 minute').blockFor('1 hour')
+})
