@@ -32,7 +32,7 @@ export default function ForgotPassword() {
       {isEmailSent && (
         <div>An email has been sent to you with instructions on how to reset your password.</div>
       )}
-      <form method="POST" onSubmit={submit}>
+      <form onSubmit={submit}>
         {errors.email && <small>{errors.email}</small>}
 
         <div>

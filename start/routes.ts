@@ -39,6 +39,7 @@ router
   .group(() => {
     router.get('/verify-email', [VerifyEmailController, 'render']).as('verify.email')
     router.get('/verify-email/:token', [VerifyEmailController, 'execute']).as('verify.email.verify')
+    router.post('verify-email/resend', [VerifyEmailController, 'resend']).as('verify.email.resend')
   })
   .middleware(middleware.auth())
 

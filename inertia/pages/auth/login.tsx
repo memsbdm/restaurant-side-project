@@ -31,7 +31,7 @@ export default function LoginPage() {
         <small>No account found with provided credentials</small>
       )}
 
-      <form method="POST" onSubmit={submit} className="w-80">
+      <form onSubmit={submit} className="w-80">
         <div className={'flex flex-col'}>
           <label htmlFor="username">Login</label>
           <input
