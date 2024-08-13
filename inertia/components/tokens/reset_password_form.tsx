@@ -28,7 +28,7 @@ export function ResetPasswordForm(props: { token: string }) {
   return (
     <>
       <h1>Reset your password</h1>
-      <form onSubmit={submit} className="w-80">
+      <form onSubmit={submit}>
         <div>
           <label htmlFor="password">Password</label>
           <input

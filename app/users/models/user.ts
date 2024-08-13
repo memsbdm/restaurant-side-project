@@ -10,6 +10,7 @@ import type { UserRoleId } from '#users/enums/user_role'
 import { DateTime } from 'luxon'
 import Token from '#tokens/models/token'
 import { TokenType } from '#tokens/enums/token_type'
+import Restaurant from '#restaurants/models/restaurant'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email', 'username'],
@@ -73,4 +74,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
     },
   })
   declare resetPasswordTokens: HasMany<typeof Token>
+
+  @hasMany(() => Restaurant)
+  declare restaurants: HasMany<typeof Restaurant>
 }

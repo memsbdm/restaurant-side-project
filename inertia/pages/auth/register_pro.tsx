@@ -19,7 +19,7 @@ export default function RegisterPro() {
       return
     }
 
-    post('/auth/register/pro', {
+    post(tuyau.$url('auth.register.pro'), {
       onFinish() {
         reset('password', 'passwordConfirmation')
       },
@@ -29,7 +29,7 @@ export default function RegisterPro() {
   return (
     <>
       <h1>Register pro page</h1>
-      <form onSubmit={submit} className="w-80">
+      <form onSubmit={submit}>
         <div>
           <label htmlFor="firstName">First name</label>
           <input

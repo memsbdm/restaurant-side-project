@@ -10,6 +10,9 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { forgotPasswordLimiter, verifyEmailLimiter, verifyTokenLimiter } from './limiter.js'
+const CreateRestaurantController = () =>
+  import('#restaurants/controllers/create_restaurant_controller')
+const OwnedRestaurantsController = () => import('#restaurants/controllers/owned_restaurants')
 const ResetPasswordController = () => import('#users/controllers/reset_password_controller')
 const ForgotPasswordController = () => import('#users/controllers/forgot_password_controller')
 const VerifyEmailController = () => import('#users/controllers/verify_email_controller')
@@ -64,3 +67,10 @@ router
       .as('reset.password.update')
   })
   .middleware(middleware.guest())
+
+// Restaurants
+router.group(() => {
+  router.get('/restaurants/create', [CreateRestaurantController, 'render']).as('restaurant.create')
+  router.post('/restaurants/create', [CreateRestaurantController, 'execute'])
+  router.get('/restaurants', [OwnedRestaurantsController, 'render']).as('owned.restaurants')
+})

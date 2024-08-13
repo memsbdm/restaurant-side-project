@@ -17,6 +17,7 @@
     "#auth/*": "./app/auth/*.js",
     "#core/*": "./app/core/*.js",
     "#inertia/*": "./inertia/*.js",
+    "#restaurants/*": "./app/restaurants/*.js",
     "#tokens/*": "./app/tokens/*.js",
     "#users/*": "./app/users/*.js",
     "#providers/*": "./providers/*.js",
