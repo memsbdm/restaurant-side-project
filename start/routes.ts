@@ -69,8 +69,12 @@ router
   .middleware(middleware.guest())
 
 // Restaurants
-router.group(() => {
-  router.get('/restaurants/create', [CreateRestaurantController, 'render']).as('restaurant.create')
-  router.post('/restaurants/create', [CreateRestaurantController, 'execute'])
-  router.get('/restaurants', [OwnedRestaurantsController, 'render']).as('owned.restaurants')
-})
+router
+  .group(() => {
+    router
+      .get('/restaurants/create', [CreateRestaurantController, 'render'])
+      .as('restaurant.create')
+    router.post('/restaurants/create', [CreateRestaurantController, 'execute'])
+    router.get('/restaurants', [OwnedRestaurantsController, 'render']).as('owned.restaurants')
+  })
+  .use(middleware.pro())
