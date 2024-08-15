@@ -8,7 +8,7 @@ const driveConfig = defineConfig({
    * The services object can be used to configure multiple file system
    * services each using the same or a different driver.
    */
-  services: { 
+  services: {
     s3: services.s3({
       credentials: {
         accessKeyId: env.get('AWS_ACCESS_KEY_ID'),
@@ -17,6 +17,7 @@ const driveConfig = defineConfig({
       region: env.get('AWS_REGION'),
       bucket: env.get('S3_BUCKET'),
       visibility: 'public',
+      supportsACL: false,
     }),
   },
 })

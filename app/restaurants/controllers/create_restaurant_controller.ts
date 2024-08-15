@@ -16,6 +16,13 @@ export default class CreateRestaurantController {
       phone: vine.string().mobile(),
     })
   )
+
+  static OwnershipDocumentValidator = vine.compile(
+    vine.object({
+      ownershipDocument: vine.file({ size: '2mb', extnames: ['jpg', 'png', 'jpeg', 'pdf'] }),
+    })
+  )
+
   constructor(private restaurantService: RestaurantService) {}
 
   async render({ auth, inertia }: HttpContext) {
@@ -25,7 +32,12 @@ export default class CreateRestaurantController {
 
   async execute({ request, auth, response }: HttpContext) {
     const payload = await request.validateUsing(CreateRestaurantController.StoreRestaurantValidator)
-    await this.restaurantService.store({ ...payload, userId: auth.user!.id })
+    const { ownershipDocument } = await request.validateUsing(
+      CreateRestaurantController.OwnershipDocumentValidator
+    )
+
+    const userId = auth.user!.id
+    await this.restaurantService.store({ ...payload, userId }, ownershipDocument)
 
     return response.redirect().toPath(tuyau.$url('owned.restaurants'))
   }

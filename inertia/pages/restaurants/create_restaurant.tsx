@@ -1,4 +1,4 @@
-import { FormEvent } from 'react'
+import { ChangeEvent, FormEvent } from 'react'
 import { Link, useForm } from '@inertiajs/react'
 import { tuyau } from '~/core/providers/tuyau'
 import type Restaurant from '#restaurants/models/restaurant'
@@ -11,6 +11,7 @@ export default function CreateRestaurant(props: { restaurants: Restaurant[] }) {
     city: '',
     country: '',
     phone: '',
+    ownershipDocument: null as File | null,
   })
   function submit(event: FormEvent) {
     event.preventDefault()
@@ -22,6 +23,11 @@ export default function CreateRestaurant(props: { restaurants: Restaurant[] }) {
     post(tuyau.$url('restaurant.create'))
   }
 
+  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      setData('ownershipDocument', e.target.files[0])
+    }
+  }
   return (
     <>
       <h1>Create restaurant page</h1>
@@ -104,6 +110,11 @@ export default function CreateRestaurant(props: { restaurants: Restaurant[] }) {
           />
           {errors.phone && <small>{errors.phone}</small>}
         </div>
+        <div>
+          <label htmlFor="ownershipDocument">Ownership Document</label>
+          <input type="file" onChange={(e) => handleFileChange(e)} />
+        </div>
+        {errors.ownershipDocument && <small>{errors.ownershipDocument}</small>}
         <button type="submit" disabled={processing}>
           Create
         </button>

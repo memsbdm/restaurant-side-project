@@ -9,7 +9,7 @@ export default class ProMiddleware {
      */
     const user = auth?.user
 
-    if (user && user.roleId !== UserRole.Pro) {
+    if (!user || user.roleId !== UserRole.Pro) {
       return response.redirect().toPath('/')
     }
 
