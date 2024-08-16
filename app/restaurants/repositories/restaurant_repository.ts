@@ -23,4 +23,9 @@ export class RestaurantRepository {
   getRestaurantsByUserId(id: UserId): Promise<Restaurant[]> {
     return Restaurant.findManyBy('user_id', id)
   }
+
+  async getRestaurantsCountByUserId(id: UserId): Promise<number> {
+    const q = await Restaurant.query().where('user_id', '=', id).count('*')
+    return q[0].$extras.count
+  }
 }

@@ -1,9 +1,8 @@
 import { ChangeEvent, FormEvent } from 'react'
 import { Link, useForm } from '@inertiajs/react'
 import { tuyau } from '~/core/providers/tuyau'
-import type Restaurant from '#restaurants/models/restaurant'
 
-export default function CreateRestaurant(props: { restaurants: Restaurant[] }) {
+export default function CreateRestaurant(props: { restaurantsCount: number }) {
   const { errors, post, processing, data, setData } = useForm({
     name: '',
     address: '',
@@ -31,7 +30,7 @@ export default function CreateRestaurant(props: { restaurants: Restaurant[] }) {
   return (
     <>
       <h1>Create restaurant page</h1>
-      {props.restaurants.length > 0 && <Link href="/">Go back to homepage</Link>}
+      {props.restaurantsCount > 0 && <Link href="/">Go back to homepage</Link>}
       <form onSubmit={submit}>
         <div>
           <label htmlFor="name">Name</label>

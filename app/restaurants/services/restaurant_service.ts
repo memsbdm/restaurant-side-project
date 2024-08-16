@@ -31,4 +31,8 @@ export class RestaurantService {
   getRestaurantsByUserId(id: UserId): Promise<Restaurant[]> {
     return this.repository.getRestaurantsByUserId(id)
   }
+
+  async getRestaurantsCountByUserId(id: UserId): Promise<number> {
+    return this.repository.getRestaurantsCountByUserId(id)
+  }
 }
