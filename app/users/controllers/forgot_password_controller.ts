@@ -8,7 +8,7 @@ import vine from '@vinejs/vine'
 export default class ForgotPasswordController {
   static EmailValidator = vine.compile(
     vine.object({
-      email: vine.string().email(),
+      email: vine.string().trim().email().normalizeEmail(),
     })
   )
 

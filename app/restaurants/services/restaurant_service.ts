@@ -6,6 +6,7 @@ import { type UserId } from '#users/models/user'
 import { StorageService } from '#core/services/storage_service'
 import { type MultipartFile } from '@adonisjs/core/bodyparser'
 import { OwnershipDocumentService } from '#restaurants/services/ownership_document_service'
+import type { ListRestaurantsQs } from '#restaurants/controllers/list_restaurants_controller'
 
 @inject()
 export class RestaurantService {
@@ -23,7 +24,11 @@ export class RestaurantService {
     return storedRestaurant
   }
 
-  getRestaurantsByUserId(id: UserId) {
+  getAllPaginated(page: number, perPage: number, qs: ListRestaurantsQs) {
+    return this.repository.getAllPaginated(page, perPage, qs)
+  }
+
+  getRestaurantsByUserId(id: UserId): Promise<Restaurant[]> {
     return this.repository.getRestaurantsByUserId(id)
   }
 }
