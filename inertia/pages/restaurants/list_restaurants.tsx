@@ -27,7 +27,7 @@ export default function ListRestaurants(props: ListRestaurantsProps) {
   useEffect(() => {
     router.get(
       tuyau.$url('admin.restaurants', {
-        query: { name: nameFilter, page: pageFilter, status_id: statusIdFilter },
+        query: { name: nameFilter, page: pageFilter, statusId: statusIdFilter },
       }),
       {},
       {
