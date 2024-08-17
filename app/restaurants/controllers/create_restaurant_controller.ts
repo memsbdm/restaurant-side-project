@@ -26,7 +26,7 @@ export default class CreateRestaurantController {
   constructor(private restaurantService: RestaurantService) {}
 
   async render({ auth, inertia }: HttpContext) {
-    const restaurantsCount = await this.restaurantService.getRestaurantsCountByUserId(auth.user!.id)
+    const restaurantsCount = await this.restaurantService.findUserRestaurantsCount(auth.user!.id)
     return inertia.render('restaurants/create_restaurant', { restaurantsCount })
   }
 

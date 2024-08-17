@@ -3,7 +3,7 @@ import { TokenService } from '#tokens/services/token_service'
 import type User from '#users/models/user'
 import VerifyEmailNotification from '#users/mails/verify_email_notification'
 import { TokenType } from '#tokens/enums/token_type'
-import { MailService } from '#core/exceptions/services/mail_service'
+import { MailService } from '#core/services/mail_service'
 
 @inject()
 export class VerifyEmailService {

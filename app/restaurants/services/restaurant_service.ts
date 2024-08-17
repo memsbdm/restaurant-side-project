@@ -24,15 +24,15 @@ export class RestaurantService {
     return storedRestaurant
   }
 
-  getAllPaginated(page: number, perPage: number, qs: ListRestaurantsQs) {
-    return this.repository.getAllPaginated(page, perPage, qs)
+  paginate(page: number, perPage: number, qs: ListRestaurantsQs) {
+    return this.repository.paginate(page, perPage, qs)
   }
 
-  getRestaurantsByUserId(id: UserId): Promise<Restaurant[]> {
-    return this.repository.getRestaurantsByUserId(id)
+  findUserRestaurants(id: UserId): Promise<Restaurant[]> {
+    return this.repository.findUserRestaurants(id)
   }
 
-  async getRestaurantsCountByUserId(id: UserId): Promise<number> {
-    return this.repository.getRestaurantsCountByUserId(id)
+  async findUserRestaurantsCount(id: UserId): Promise<number> {
+    return this.repository.findUserRestaurantsCount(id)
   }
 }

@@ -10,6 +10,7 @@ export class StorageService {
   async store(file: MultipartFile, path: StoragePath): Promise<string> {
     const key = `uploads/${path}/${cuid()}.${file.extname}`
     await file.moveToDisk(key)
+
     return drive.use().getUrl(key)
   }
 }

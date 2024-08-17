@@ -8,7 +8,7 @@ export class RestaurantRepository {
     return Restaurant.create(restaurant)
   }
 
-  getAllPaginated(page: number, perPage: number, qs: ListRestaurantsQs) {
+  paginate(page: number, perPage: number, qs: ListRestaurantsQs) {
     return Restaurant.query()
       .if(qs.name, (query) => {
         query.whereILike('name', `%${qs.name}%`)
@@ -20,11 +20,11 @@ export class RestaurantRepository {
       .paginate(page, perPage)
   }
 
-  getRestaurantsByUserId(id: UserId): Promise<Restaurant[]> {
+  findUserRestaurants(id: UserId): Promise<Restaurant[]> {
     return Restaurant.findManyBy('user_id', id)
   }
 
-  async getRestaurantsCountByUserId(id: UserId): Promise<number> {
+  async findUserRestaurantsCount(id: UserId): Promise<number> {
     const q = await Restaurant.query().where('user_id', '=', id).count('*')
     return q[0].$extras.count
   }
