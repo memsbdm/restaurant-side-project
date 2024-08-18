@@ -17,6 +17,9 @@ export default class OwnershipDocument extends BaseModel {
   declare restaurantId: RestaurantId
 
   @column()
+  declare key: string
+
+  @column()
   declare url: string
 
   @column()

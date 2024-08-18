@@ -1,9 +1,10 @@
 import type Restaurant from '#restaurants/models/restaurant'
 import type { SimplePaginatorMetaKeys } from '@adonisjs/lucid/types/querybuilder'
-import { router } from '@inertiajs/react'
+import { Link, router } from '@inertiajs/react'
 import { tuyau } from '~/core/providers/tuyau'
 import type { ListRestaurantsQs } from '#restaurants/controllers/list_restaurants_controller'
 import {
+  RestaurantStatus,
   restaurantStatusDbValues,
   type RestaurantStatusId,
 } from '#restaurants/enums/restaurant_status'
@@ -72,7 +73,19 @@ export default function ListRestaurants(props: ListRestaurantsProps) {
       </select>
 
       {restaurants && !restaurants.length && <p>No restaurant found</p>}
-      {restaurants && restaurants.map((restaurant) => <p key={restaurant.id}>{restaurant.name}</p>)}
+      {restaurants &&
+        restaurants.map((restaurant) => (
+          <p key={restaurant.id}>
+            {restaurant.name}{' '}
+            {restaurant.statusId === RestaurantStatus.Pending && (
+              <Link
+                href={tuyau.$url('admin.restaurants.render', { params: { id: restaurant.id } })}
+              >
+                Go to verify page
+              </Link>
+            )}
+          </p>
+        ))}
 
       {meta && meta.nextPageUrl && <button onClick={handleNext}>Next</button>}
       {meta && meta.previousPageUrl && <button onClick={handlePrevious}>Previous</button>}

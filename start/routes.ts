@@ -11,6 +11,8 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { forgotPasswordLimiter, verifyEmailLimiter, verifyTokenLimiter } from './limiter.js'
 import { UserRole } from '#users/enums/user_role'
+const VerifyRestaurantController = () =>
+  import('#restaurants/controllers/verify_restaurant_controller')
 const ListRestaurantsController = () =>
   import('#restaurants/controllers/list_restaurants_controller')
 const CreateRestaurantController = () =>
@@ -22,6 +24,9 @@ const VerifyEmailController = () => import('#users/controllers/verify_email_cont
 const LoginController = () => import('#auth/controllers/login_controller')
 const LogoutController = () => import('#auth/controllers/logout_controller')
 const RegisterProController = () => import('#auth/controllers/register_pro_controller')
+
+// Global matcher
+router.where('id', router.matchers.uuid())
 
 router.on('/').renderInertia('home', { version: 6 })
 router.on('/protected').renderInertia('protected').middleware(middleware.auth()).as('protected')
@@ -85,5 +90,14 @@ router
 router
   .group(() => {
     router.get('/admin/restaurants', [ListRestaurantsController, 'render']).as('admin.restaurants')
+    router
+      .get('/admin/restaurants/:id', [VerifyRestaurantController, 'render'])
+      .as('admin.restaurants.render')
+    router
+      .post('/admin/restaurants/:id/verify', [VerifyRestaurantController, 'verify'])
+      .as('admin.restaurants.verify')
+    router
+      .post('/admin/restaurants/:id/reject', [VerifyRestaurantController, 'reject'])
+      .as('admin.restaurants.reject')
   })
   .middleware(middleware.role(UserRole.Admin))

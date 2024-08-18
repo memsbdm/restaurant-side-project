@@ -14,6 +14,7 @@ export default class extends BaseSchema {
         .references('id')
         .inTable('restaurants')
         .onDelete('CASCADE')
+      table.string('key').notNullable()
       table.string('url').notNullable()
       table.boolean('is_confirmed').defaultTo(false)
     })
