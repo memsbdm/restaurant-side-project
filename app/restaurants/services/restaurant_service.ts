@@ -8,6 +8,7 @@ import { type MultipartFile } from '@adonisjs/core/bodyparser'
 import { OwnershipDocumentService } from '#restaurants/services/ownership_document_service'
 import type { ListRestaurantsQs } from '#restaurants/controllers/list_restaurants_controller'
 import type { RestaurantStatusId } from '#restaurants/enums/restaurant_status'
+import type { UpdateRestaurantDto } from '#restaurants/dtos/update_restaurant_dto'
 
 @inject()
 export class RestaurantService {
@@ -47,5 +48,9 @@ export class RestaurantService {
 
   changeStatus(restaurant: Restaurant, statusId: RestaurantStatusId): Promise<void> {
     return this.repository.changeStatus(restaurant, statusId)
+  }
+
+  update(restaurant: Restaurant, payload: UpdateRestaurantDto): Promise<void> {
+    return this.repository.update(restaurant, payload)
   }
 }

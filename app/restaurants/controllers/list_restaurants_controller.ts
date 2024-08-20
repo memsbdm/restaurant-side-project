@@ -16,7 +16,7 @@ export default class ListRestaurantsController {
   async render({ inertia, request }: HttpContext) {
     const page = request.input('page', 1)
     const qs: ListRestaurantsQs = request.qs()
-    const restaurants = await this.restaurantService.paginate(page, 1, qs)
+    const restaurants = await this.restaurantService.paginate(page, 10, qs)
 
     return inertia.render('restaurants/list_restaurants', { restaurants, qs })
   }

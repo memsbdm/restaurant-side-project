@@ -11,13 +11,15 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { forgotPasswordLimiter, verifyEmailLimiter, verifyTokenLimiter } from './limiter.js'
 import { UserRole } from '#users/enums/user_role'
+const EditRestaurantController = () => import('#restaurants/controllers/edit_restaurant_controller')
 const VerifyRestaurantController = () =>
   import('#restaurants/controllers/verify_restaurant_controller')
 const ListRestaurantsController = () =>
   import('#restaurants/controllers/list_restaurants_controller')
 const CreateRestaurantController = () =>
   import('#restaurants/controllers/create_restaurant_controller')
-const OwnedRestaurantsController = () => import('#restaurants/controllers/owned_restaurants')
+const OwnedRestaurantsController = () =>
+  import('#restaurants/controllers/owned_restaurants_controller')
 const ResetPasswordController = () => import('#users/controllers/reset_password_controller')
 const ForgotPasswordController = () => import('#users/controllers/forgot_password_controller')
 const VerifyEmailController = () => import('#users/controllers/verify_email_controller')
@@ -84,6 +86,10 @@ router
       .as('restaurant.create')
     router.post('/restaurants/create', [CreateRestaurantController, 'execute'])
     router.get('/restaurants', [OwnedRestaurantsController, 'render']).as('owned.restaurants')
+    router.get('/restaurants/:id', [EditRestaurantController, 'render'])
+    router
+      .put('/restaurants/:id/update', [EditRestaurantController, 'execute'])
+      .as('restaurant.update')
   })
   .middleware(middleware.role(UserRole.Pro))
 
