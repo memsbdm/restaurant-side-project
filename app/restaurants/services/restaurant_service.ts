@@ -53,4 +53,8 @@ export class RestaurantService {
   update(restaurant: Restaurant, payload: UpdateRestaurantDto): Promise<void> {
     return this.repository.update(restaurant, payload)
   }
+
+  destroy(restaurant: Restaurant): Promise<void> {
+    return this.repository.destroy(restaurant)
+  }
 }

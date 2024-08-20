@@ -11,6 +11,8 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { forgotPasswordLimiter, verifyEmailLimiter, verifyTokenLimiter } from './limiter.js'
 import { UserRole } from '#users/enums/user_role'
+const DeleteRestaurantController = () =>
+  import('#restaurants/controllers/delete_restaurant_controller')
 const EditRestaurantController = () => import('#restaurants/controllers/edit_restaurant_controller')
 const VerifyRestaurantController = () =>
   import('#restaurants/controllers/verify_restaurant_controller')
@@ -86,12 +88,17 @@ router
       .as('restaurant.create')
     router.post('/restaurants/create', [CreateRestaurantController, 'execute'])
     router.get('/restaurants', [OwnedRestaurantsController, 'render']).as('owned.restaurants')
-    router.get('/restaurants/:id', [EditRestaurantController, 'render'])
+    router.get('/restaurants/:id', [EditRestaurantController, 'render']).as('restaurant.details')
     router
       .put('/restaurants/:id/update', [EditRestaurantController, 'execute'])
       .as('restaurant.update')
   })
   .middleware(middleware.role(UserRole.Pro))
+
+router
+  .delete('/restaurants/:id', [DeleteRestaurantController, 'execute'])
+  .middleware([middleware.role(UserRole.Pro), middleware.role(UserRole.Admin)])
+  .as('restaurant.delete')
 
 router
   .group(() => {

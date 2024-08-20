@@ -3,6 +3,7 @@ export const RestaurantStatus = {
   Active: 2,
   Inactive: 3,
   Rejected: 4,
+  Deleted: 5,
 } as const
 
 export type RestaurantStatusId = (typeof RestaurantStatus)[keyof typeof RestaurantStatus]
@@ -12,6 +13,7 @@ export const RestaurantStatusText = {
   [RestaurantStatus.Active]: 'Active',
   [RestaurantStatus.Inactive]: 'Inactive',
   [RestaurantStatus.Rejected]: 'Rejected',
+  [RestaurantStatus.Deleted]: 'Deleted',
 } as const
 
 export const restaurantStatusDbValues = [
@@ -30,5 +32,9 @@ export const restaurantStatusDbValues = [
   {
     id: RestaurantStatus.Rejected,
     name: RestaurantStatusText[RestaurantStatus.Rejected],
+  },
+  {
+    id: RestaurantStatus.Deleted,
+    name: RestaurantStatusText[RestaurantStatus.Deleted],
   },
 ]

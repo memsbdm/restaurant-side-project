@@ -2,11 +2,12 @@ import type Restaurant from '#restaurants/models/restaurant'
 import { useForm } from '@inertiajs/react'
 import { tuyau } from '~/core/providers/tuyau'
 import { type FormEvent } from 'react'
+import { RestaurantStatus } from '#restaurants/enums/restaurant_status'
 
 export default function EditRestaurant(props: { restaurant: Restaurant }) {
   const { restaurant } = props
 
-  const { errors, put, processing, data, setData } = useForm({
+  const updateForm = useForm({
     name: restaurant.name,
     phone: restaurant.phone,
   })
@@ -14,11 +15,19 @@ export default function EditRestaurant(props: { restaurant: Restaurant }) {
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
 
-    if (processing) {
+    if (updateForm.processing || deleteForm.processing) {
       return
     }
 
-    put(tuyau.$url('restaurant.update', { params: { id: restaurant.id } }))
+    updateForm.put(tuyau.$url('restaurant.update', { params: { id: restaurant.id } }))
+  }
+
+  const deleteForm = useForm()
+
+  function deleteRestaurant() {
+    if (updateForm.processing || deleteForm.processing) return
+
+    deleteForm.delete(tuyau.$url('restaurant.delete', { params: { id: restaurant.id } }))
   }
   return (
     <>
@@ -30,10 +39,10 @@ export default function EditRestaurant(props: { restaurant: Restaurant }) {
           id={'name'}
           name={'name'}
           required={true}
-          onChange={(e) => setData('name', e.target.value)}
-          value={data.name}
+          onChange={(e) => updateForm.setData('name', e.target.value)}
+          value={updateForm.data.name}
         />
-        {errors.name && <small>{errors.name}</small>}
+        {updateForm.errors.name && <small>{updateForm.errors.name}</small>}
 
         <p>{restaurant.address}</p>
         <p>{restaurant.postalCode}</p>
@@ -46,15 +55,19 @@ export default function EditRestaurant(props: { restaurant: Restaurant }) {
           id={'phone'}
           name={'phone'}
           required={true}
-          onChange={(e) => setData('phone', e.target.value)}
-          value={data.phone}
+          onChange={(e) => updateForm.setData('phone', e.target.value)}
+          value={updateForm.data.phone}
         />
-        {errors.phone && <small>{errors.phone}</small>}
+        {updateForm.errors.phone && <small>{updateForm.errors.phone}</small>}
 
-        <button type={'submit'} disabled={processing}>
+        <button type={'submit'} disabled={updateForm.processing || deleteForm.processing}>
           Validate changes
         </button>
       </form>
+      {restaurant.statusId !== RestaurantStatus.Pending &&
+        restaurant.statusId !== RestaurantStatus.Deleted && (
+          <button onClick={deleteRestaurant}>Delete</button>
+        )}
     </>
   )
 }

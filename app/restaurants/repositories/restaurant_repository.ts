@@ -2,7 +2,7 @@ import { type StoreRestaurantDto } from '#restaurants/dtos/store_restaurant_dto'
 import Restaurant, { type RestaurantId } from '#restaurants/models/restaurant'
 import { type UserId } from '#users/models/user'
 import type { ListRestaurantsQs } from '#restaurants/controllers/list_restaurants_controller'
-import { type RestaurantStatusId } from '#restaurants/enums/restaurant_status'
+import { RestaurantStatus, type RestaurantStatusId } from '#restaurants/enums/restaurant_status'
 import { type UpdateRestaurantDto } from '#restaurants/dtos/update_restaurant_dto'
 
 export class RestaurantRepository {
@@ -46,6 +46,11 @@ export class RestaurantRepository {
 
   async update(restaurant: Restaurant, payload: UpdateRestaurantDto): Promise<void> {
     restaurant.merge(payload)
+    await restaurant.save()
+  }
+
+  async destroy(restaurant: Restaurant): Promise<void> {
+    restaurant.statusId = RestaurantStatus.Deleted
     await restaurant.save()
   }
 }
